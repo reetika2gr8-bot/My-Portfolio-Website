@@ -1,0 +1,14 @@
+/** Tiny pub/sub bus so modules stay decoupled. */
+const listeners = new Map();
+export const bus = {
+  on(type, fn) {
+    if (!listeners.has(type)) listeners.set(type, new Set());
+    listeners.get(type).add(fn);
+    return () => listeners.get(type)?.delete(fn);
+  },
+  emit(type, detail) {
+    listeners.get(type)?.forEach((fn) => {
+      try { fn(detail); } catch (e) { console.warn('[bus]', type, e); }
+    });
+  },
+};

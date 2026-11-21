@@ -1,0 +1,15 @@
+{
+  "name": "my-little-room",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Reetika's interactive illustrated portfolio — a little room you can explore.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
