@@ -22,7 +22,7 @@ export class AmbienceManager {
     const L = refs.lighting;
     this.lt = {
       tint: L.querySelector('.lt-tint'), haze: L.querySelector('.lt-haze'),
-      lamp: L.querySelector('.lt-lamp'), monitor: L.querySelector('.lt-monitor'),
+      lamps: [...L.querySelectorAll('.lt-lamp')], cool: L.querySelector('.lt-cool'), monitor: L.querySelector('.lt-monitor'),
       sun: L.querySelector('.lt-sun'), moon: L.querySelector('.lt-moon'),
       vignette: L.querySelector('.lt-vignette'),
     };
@@ -64,11 +64,14 @@ export class AmbienceManager {
   }
 
   applyLighting(l) {
-    const { tint, haze, lamp, monitor, sun, moon, vignette } = this.lt;
+    const { tint, haze, lamps, cool, monitor, sun, moon, vignette } = this.lt;
     tint.style.fill = l.tint; tint.style.opacity = l.tintOpacity + (this.lampOn ? 0 : 0.16);
     haze.style.fill = l.haze; haze.style.opacity = l.hazeOpacity;
-    lamp.style.opacity = this.lampOn ? l.lamp : 0;
-    lamp.classList.toggle('is-flicker', !!l.lampFlicker && this.lampOn);
+    for (const lamp of lamps) {
+      lamp.style.opacity = this.lampOn ? l.lamp : 0;
+      lamp.classList.toggle('is-flicker', !!l.lampFlicker && this.lampOn);
+    }
+    cool.style.opacity = l.windowSpill ?? 0;
     monitor.style.opacity = l.monitor;
     sun.style.opacity = l.sunBeams;
     moon.style.opacity = l.moonBeams;

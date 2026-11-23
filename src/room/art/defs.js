@@ -19,7 +19,7 @@ export const svgOpen = (w, h, extra = '') =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" ${extra}>`;
 
 /** Filters used by most static layers. ids are prefixed to avoid collisions. */
-export function paintFilters(p = 'p', { wobble = 4, streak = 0.45, grain = 0.6 } = {}) {
+export function paintFilters(p = 'p', { wobble = 4, streak = 0.22, grain = 0.3 } = {}) {
   return `
   <filter id="${p}-paint" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
     <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="4" result="warp"/>

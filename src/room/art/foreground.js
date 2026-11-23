@@ -38,7 +38,7 @@ export function foregroundSvg() {
     <linearGradient id="${P}-head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6e4429"/><stop offset="1" stop-color="#3a2416"/></linearGradient>
     <linearGradient id="${P}-side" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a3442"/><stop offset="1" stop-color="#3f4e60"/></linearGradient>
     <radialGradient id="${P}-warm" cx="0.2" cy="0.1" r="0.8"><stop offset="0" stop-color="#e8a85a" stop-opacity="0.35"/><stop offset="1" stop-color="#e8a85a" stop-opacity="0"/></radialGradient>
-    <linearGradient id="${P}-floorShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#05070a" stop-opacity="0.55"/></linearGradient>
+    <linearGradient id="${P}-floorShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#05070a" stop-opacity="0.22"/></linearGradient>
     <linearGradient id="${P}-quilt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6f8197"/><stop offset="0.6" stop-color="#55677c"/><stop offset="1" stop-color="#3f4e60"/></linearGradient>
     <clipPath id="${P}-top"><path d="M1252 646 Q1420 628 1600 634 V900 H1420 Q1330 770 1252 646 Z"/></clipPath>
   </defs>
@@ -67,6 +67,6 @@ export function foregroundSvg() {
     <path d="M1252 646 Q1300 760 1420 900" stroke="#e8c79a" stroke-width="2" opacity="0.3" fill="none"/>
     <path d="M1252 646 Q1420 628 1600 634" stroke="#c9b28c" stroke-width="2" opacity="0.4" fill="none"/>
   </g>
-  <path d="M0 900 V700 Q60 760 40 900 Z" fill="#05060a" opacity="0.5" filter="url(#${P}-blur24)"/>
+  <path d="M0 900 V700 Q60 760 40 900 Z" fill="#05060a" opacity="0.3" filter="url(#${P}-blur24)"/>
 </svg>`;
 }

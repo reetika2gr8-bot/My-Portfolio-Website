@@ -26,6 +26,8 @@
 .weather-window { position: absolute; pointer-events: none; }
 
 /* ---------- lighting ---------- */
+.layer--lighting > svg { position: absolute; left: 0; top: 0; width: 1600px; height: 900px; overflow: visible; }
+.layer--lighting > .lt-defs { width: 0; height: 0; }
 .layer--lighting .lt { transition: opacity var(--amb-t) ease, fill var(--amb-t) ease; }
 .layer--lighting .lt-tint, .layer--lighting .lt-haze { opacity: 0; }
 .lt-lamp.is-flicker > * { animation: lampFlicker 9s infinite; }

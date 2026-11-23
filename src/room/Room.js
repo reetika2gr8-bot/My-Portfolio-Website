@@ -75,7 +75,7 @@ export async function buildRoom(stage) {
   refs.character = stageSvg('layer--character', characterSvg());
   refs.cat = stageSvg('layer--cat', catSvg());
   refs.plant = stageSvg('layer--plant', plantSvg());
-  refs.lighting = stageSvg('layer--lighting', lightingSvg());
+  refs.lighting = el('div', { class: 'layer layer--lighting', 'aria-hidden': 'true' }, lightingSvg());
   refs.motesCanvas = el('canvas', { class: 'layer layer--motes', 'aria-hidden': 'true' });
 
   refs.clock = el('div', { class: 'desk-clock', 'aria-hidden': 'true' }, '--:--');

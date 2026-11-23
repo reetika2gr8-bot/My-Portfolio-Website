@@ -146,38 +146,58 @@ export function wallStarGlowSvg() {
   </g>`;
 }
 
-/* ---------- LIGHTING RIG (Layer above everything in the room) ---------- */
+/* ---------- LIGHTING RIG (Layer above everything in the room) ----------
+ * Each light is its OWN <svg> so its mix-blend-mode blends with the room underneath.
+ * (Grouping them in one <g>/<svg> isolates them and turns every blend into a flat
+ * translucent coat — that was the source of the old grey-blue haze.)
+ * Localized light only — nothing here washes the whole frame:
+ *   lt-tint     cool mood (multiply), faded out around the desk and the window
+ *   lt-haze     optional atmospheric lift (screen) — 0 for most ambiences
+ *   lt-cool     cool spill from the window (soft-light: tints without greying)
+ *   lt-sun / lt-moon   light shafts
+ *   lt-monitor  small cool glow on the screen
+ *   lt-lamp     warm pool on the desk (soft-light) + tight bright core (screen)
+ *   lt-vignette gentle edge falloff
+ */
 export function lightingSvg() {
   return `
-  <defs>
-    <radialGradient id="lt-lamp" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffd59a" stop-opacity="0.8"/><stop offset="0.3" stop-color="#f0a25a" stop-opacity="0.3"/><stop offset="0.65" stop-color="#e08a40" stop-opacity="0.08"/><stop offset="1" stop-color="#e08a40" stop-opacity="0"/></radialGradient>
+  <svg class="lt-defs" width="0" height="0" aria-hidden="true"><defs>
+    <radialGradient id="lt-tintFade" gradientUnits="userSpaceOnUse" cx="1040" cy="560" r="760">
+      <stop offset="0" stop-color="#222"/><stop offset="0.4" stop-color="#8a8a8a"/><stop offset="1" stop-color="#fff"/>
+    </radialGradient>
+    <radialGradient id="lt-warm" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffb466" stop-opacity="0.9"/><stop offset="0.5" stop-color="#f09a50" stop-opacity="0.4"/><stop offset="1" stop-color="#e08a40" stop-opacity="0"/></radialGradient>
+    <radialGradient id="lt-lamp" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffdcaa" stop-opacity="0.55"/><stop offset="0.5" stop-color="#ffc27a" stop-opacity="0.16"/><stop offset="1" stop-color="#ffb060" stop-opacity="0"/></radialGradient>
     <radialGradient id="lt-bulb" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6dc" stop-opacity="1"/><stop offset="1" stop-color="#ffd59a" stop-opacity="0"/></radialGradient>
-    <linearGradient id="lt-cone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe2b0" stop-opacity="0.5"/><stop offset="1" stop-color="#ffcf8a" stop-opacity="0"/></linearGradient>
-    <radialGradient id="lt-mon" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#d8ecff" stop-opacity="0.32"/><stop offset="0.45" stop-color="#b9d4f0" stop-opacity="0.1"/><stop offset="1" stop-color="#a9c8e8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="lt-cone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe2b0" stop-opacity="0.35"/><stop offset="1" stop-color="#ffcf8a" stop-opacity="0"/></linearGradient>
+    <radialGradient id="lt-mon" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#cfe4ff" stop-opacity="0.3"/><stop offset="1" stop-color="#a9c8e8" stop-opacity="0"/></radialGradient>
+    <radialGradient id="lt-coolg" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#7fa6e0" stop-opacity="0.75"/><stop offset="1" stop-color="#7fa6e0" stop-opacity="0"/></radialGradient>
     <linearGradient id="lt-sun" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe0a0" stop-opacity="0.75"/><stop offset="1" stop-color="#ffc870" stop-opacity="0"/></linearGradient>
     <linearGradient id="lt-moon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9cdf0" stop-opacity="0.6"/><stop offset="1" stop-color="#9fb6e0" stop-opacity="0"/></linearGradient>
-    <radialGradient id="lt-vig" cx="0.52" cy="0.5" r="0.72"><stop offset="0.5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#06060a" stop-opacity="0.9"/></radialGradient>
+    <radialGradient id="lt-vig" cx="0.5" cy="0.46" r="0.75"><stop offset="0.6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#0a0806" stop-opacity="0.7"/></radialGradient>
     <filter id="lt-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter>
-  </defs>
-  <mask id="lt-winmask"><rect width="1600" height="900" fill="#fff"/><rect x="138" y="148" width="254" height="348" fill="#000" opacity="0.55" filter="url(#lt-soft)"/></mask>
-  <g mask="url(#lt-winmask)"><rect class="lt lt-tint" width="1600" height="900" style="mix-blend-mode:multiply"/></g>
-  <rect class="lt lt-haze" width="1600" height="900" style="mix-blend-mode:screen"/>
-  <g class="lt lt-sun" style="mix-blend-mode:screen" filter="url(#lt-soft)">
+    <mask id="lt-tintmask" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="900">
+      <rect width="1600" height="900" fill="url(#lt-tintFade)"/>
+      <rect x="138" y="148" width="254" height="348" fill="#000" opacity="0.6" filter="url(#lt-soft)"/>
+    </mask>
+  </defs></svg>
+  <svg class="lt lt-tint" viewBox="0 0 1600 900" style="mix-blend-mode:multiply"><rect width="1600" height="900" mask="url(#lt-tintmask)"/></svg>
+  <svg class="lt lt-haze" viewBox="0 0 1600 900" style="mix-blend-mode:screen"><rect width="1600" height="900"/></svg>
+  <svg class="lt lt-cool" viewBox="0 0 1600 900" style="mix-blend-mode:soft-light"><ellipse cx="270" cy="400" rx="360" ry="400" fill="url(#lt-coolg)"/></svg>
+  <svg class="lt lt-sun" viewBox="0 0 1600 900" style="mix-blend-mode:screen"><g filter="url(#lt-soft)">
     <path d="M140 150 L390 150 L900 760 L520 880 Z" fill="url(#lt-sun)" opacity="0.75"/>
     <path d="M520 700 L980 640 L1100 840 L560 900 Z" fill="#ffd48a" opacity="0.35"/>
     <path d="M600 330 L760 300 L800 420 L640 440 Z" fill="#ffe0a0" opacity="0.25"/>
-  </g>
-  <g class="lt lt-moon" style="mix-blend-mode:screen" filter="url(#lt-soft)">
+  </g></svg>
+  <svg class="lt lt-moon" viewBox="0 0 1600 900" style="mix-blend-mode:screen"><g filter="url(#lt-soft)">
     <path d="M140 150 L390 150 L820 760 L480 860 Z" fill="url(#lt-moon)" opacity="0.32"/>
     <path d="M480 720 L860 680 L960 840 L520 890 Z" fill="#a9c0ea" opacity="0.22"/>
-  </g>
-  <g class="lt lt-monitor" style="mix-blend-mode:screen">
-    <ellipse cx="676" cy="488" rx="190" ry="150" fill="url(#lt-mon)"/>
-  </g>
-  <g class="lt lt-lamp" style="mix-blend-mode:screen">
-    <ellipse cx="1030" cy="560" rx="440" ry="330" fill="url(#lt-lamp)"/>
-    <path d="M1018 484 L1094 502 L1190 620 L880 620 Z" fill="url(#lt-cone)" filter="url(#lt-soft)"/>
-    <ellipse cx="1054" cy="494" rx="60" ry="28" fill="url(#lt-bulb)" transform="rotate(-18 1054 494)"/>
-  </g>
-  <rect class="lt lt-vignette" width="1600" height="900" fill="url(#lt-vig)" style="mix-blend-mode:multiply"/>`;
+  </g></svg>
+  <svg class="lt lt-monitor" viewBox="0 0 1600 900" style="mix-blend-mode:screen"><ellipse cx="676" cy="486" rx="150" ry="115" fill="url(#lt-mon)"/></svg>
+  <svg class="lt lt-lamp lt-lamp--pool" viewBox="0 0 1600 900" style="mix-blend-mode:soft-light"><ellipse cx="1040" cy="560" rx="400" ry="280" fill="url(#lt-warm)"/></svg>
+  <svg class="lt lt-lamp" viewBox="0 0 1600 900" style="mix-blend-mode:screen">
+    <ellipse cx="1052" cy="556" rx="190" ry="118" fill="url(#lt-lamp)"/>
+    <path d="M1018 484 L1094 502 L1170 612 L920 612 Z" fill="url(#lt-cone)" filter="url(#lt-soft)"/>
+    <ellipse cx="1054" cy="494" rx="54" ry="24" fill="url(#lt-bulb)" transform="rotate(-18 1054 494)"/>
+  </svg>
+  <svg class="lt lt-vignette" viewBox="0 0 1600 900" style="mix-blend-mode:multiply"><rect width="1600" height="900" fill="url(#lt-vig)"/></svg>`;
 }

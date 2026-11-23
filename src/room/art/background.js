@@ -191,7 +191,7 @@ export function backgroundSvg() {
   return `${svgOpen(1600, 900)}
   <defs>
     ${paintFilters(P, { wobble: 3.5 })}
-    <linearGradient id="${P}-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b281c"/><stop offset="1" stop-color="#22150e"/></linearGradient>
+    <linearGradient id="${P}-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3122"/><stop offset="1" stop-color="#3a2518"/></linearGradient>
     <linearGradient id="${P}-frame" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3d2718"/><stop offset="0.5" stop-color="#5e3a24"/><stop offset="1" stop-color="#3a2416"/></linearGradient>
     <linearGradient id="${P}-sill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a36"/><stop offset="1" stop-color="#4e301d"/></linearGradient>
     <linearGradient id="${P}-shelf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a36"/><stop offset="1" stop-color="#4a2c1a"/></linearGradient>
@@ -199,9 +199,9 @@ export function backgroundSvg() {
     <linearGradient id="${P}-binderShade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.15"/><stop offset="0.3" stop-color="#fff" stop-opacity="0.1"/><stop offset="1" stop-color="#000" stop-opacity="0.3"/></linearGradient>
     <linearGradient id="${P}-posterSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c9a3"/><stop offset="1" stop-color="#86a6a8"/></linearGradient>
     <radialGradient id="${P}-cork" cx="0.5" cy="0.5" r="0.7"><stop offset="0" stop-color="#b98a5a"/><stop offset="1" stop-color="#8a6038"/></radialGradient>
-    <radialGradient id="${P}-lampWall" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#f0a25a" stop-opacity="0.55"/><stop offset="0.5" stop-color="#c97a42" stop-opacity="0.25"/><stop offset="1" stop-color="#c97a42" stop-opacity="0"/></radialGradient>
-    <radialGradient id="${P}-coolWall" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#8fb0cf" stop-opacity="0.28"/><stop offset="1" stop-color="#8fb0cf" stop-opacity="0"/></radialGradient>
-    <radialGradient id="${P}-corner" cx="0.5" cy="0.45" r="0.75"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#05070a" stop-opacity="0.55"/></radialGradient>
+    <radialGradient id="${P}-lampWall" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#f0a25a" stop-opacity="0.8"/><stop offset="0.5" stop-color="#c97a42" stop-opacity="0.35"/><stop offset="1" stop-color="#c97a42" stop-opacity="0"/></radialGradient>
+    <radialGradient id="${P}-coolWall" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#8fb0cf" stop-opacity="0.45"/><stop offset="1" stop-color="#8fb0cf" stop-opacity="0"/></radialGradient>
+    <radialGradient id="${P}-corner" cx="0.5" cy="0.45" r="0.75"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#05070a" stop-opacity="0.3"/></radialGradient>
     <linearGradient id="${P}-ceil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a120c"/><stop offset="1" stop-color="#2e1d14"/></linearGradient>
     <mask id="${P}-winHole"><rect width="1600" height="900" fill="#fff"/><rect x="134" y="144" width="262" height="356" fill="#000"/></mask>
   </defs>
@@ -209,9 +209,10 @@ export function backgroundSvg() {
     <g mask="url(#${P}-winHole)">
       <rect width="1600" height="900" fill="${C.wall}"/>
       ${planks}
-      <ellipse cx="980" cy="440" rx="520" ry="380" fill="url(#${P}-lampWall)"/>
-      <ellipse cx="660" cy="470" rx="220" ry="170" fill="url(#${P}-coolWall)"/>
-      <ellipse cx="270" cy="330" rx="300" ry="320" fill="url(#${P}-coolWall)"/>
+      <ellipse cx="980" cy="440" rx="520" ry="380" fill="url(#${P}-lampWall)" style="mix-blend-mode:soft-light"/>
+      <ellipse cx="1010" cy="470" rx="300" ry="230" fill="url(#${P}-lampWall)" opacity="0.35"/>
+      <ellipse cx="660" cy="470" rx="220" ry="170" fill="url(#${P}-coolWall)" style="mix-blend-mode:soft-light"/>
+      <ellipse cx="270" cy="330" rx="300" ry="320" fill="url(#${P}-coolWall)" style="mix-blend-mode:soft-light"/>
       <rect x="0" y="0" width="1600" height="46" fill="url(#${P}-ceil)"/>
       <rect x="0" y="46" width="1600" height="26" fill="#000" opacity="0.35" filter="url(#${P}-blur10)"/>
       <rect x="0" y="40" width="1600" height="6" fill="#4e301d"/>
