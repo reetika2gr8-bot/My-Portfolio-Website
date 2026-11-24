@@ -94,15 +94,18 @@ export class CatPounce {
   /* ---------------- geometry ---------------- */
   measure() {
     const vw = window.innerWidth, vh = window.innerHeight;
-    this.W = Math.round(Math.min(vw * 0.62, vh * 0.66, 540));
+    // Full-screen close-up: the cat's face fills the viewport (body runs off the bottom edge).
+    this.W = Math.round(Math.max(vw, vh * 1.05));
     this.H = Math.round(this.W * 0.95);
     const a = this.catRoot.querySelector('.cat__body').getBoundingClientRect();
     const b = this.catRoot.querySelector('.cat__head').getBoundingClientRect();
     const left = Math.min(a.left, b.left), right = Math.max(a.right, b.right);
     const top = Math.min(a.top, b.top), bottom = Math.max(a.bottom, b.bottom);
     this.from = { x: (left + right) / 2, y: (top + bottom) / 2, s: Math.max(0.12, (right - left) / (this.W * 0.78)), r: 0 };
-    this.to = { x: vw * (vw > vh ? 0.58 : 0.5), y: vh * 0.56, s: 1, r: 4 };
-    this.corner = { x: vw - this.W * 0.3, y: vh - this.H * 0.12, s: 0.62, r: -10 };
+    this.to = { x: vw / 2, y: this.H / 2 - vh * 0.03, s: 1, r: 3 };
+    // afterwards she shrinks to a smug little peek from the bottom-right corner
+    const cs = (Math.min(vw, vh) * 0.5) / this.W;
+    this.corner = { x: vw - this.W * cs * 0.3, y: vh - this.H * cs * 0.12, s: cs, r: -10 };
   }
 
   pose({ x, y, s, r }) {
@@ -153,22 +156,24 @@ export class CatPounce {
         { transform: this.pose(this.to), filter: 'blur(0px)', offset: 1 },
       ], { duration: 460, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' }));
       this.sound('leap');
-      flight.finished.then(() => this.shake(11, 340)).catch(() => {});
+      flight.finished.then(() => this.shake(16, 380)).catch(() => {});
       return 470;
     },
 
     /* Phase 4 — swipe, swipe, swipe, swipe */
     scratching() {
       this.scratches = new ScratchOverlay(document.body);
-      const { x, y } = this.to;
-      const W = this.W;
+      // claw marks spread across the whole screen
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const diag = Math.hypot(vw, vh), short = Math.min(vw, vh);
       const swipes = [
-        { paw: 'l', cx: x - W * 0.26, cy: y - W * 0.06, angle: 1.15 },
-        { paw: 'r', cx: x + W * 0.24, cy: y - W * 0.1, angle: 1.98 },
-        { paw: 'l', cx: x - W * 0.08, cy: y + W * 0.02, angle: 1.0 },
-        { paw: 'r', cx: x + W * 0.36, cy: y + W * 0.06, angle: 2.15 },
-      ];
-      const beat = motion.reduced ? 0 : 165;
+        { paw: 'l', fx: 0.24, fy: 0.42, angle: 1.12 },
+        { paw: 'r', fx: 0.74, fy: 0.36, angle: 2.0 },
+        { paw: 'l', fx: 0.44, fy: 0.6, angle: 1.0 },
+        { paw: 'r', fx: 0.86, fy: 0.66, angle: 2.12 },
+        { paw: 'l', fx: 0.12, fy: 0.72, angle: 1.22 },
+      ].map((s) => ({ ...s, cx: vw * s.fx, cy: vh * s.fy }));
+      const beat = motion.reduced ? 0 : 150;
       swipes.forEach((s, i) => this.later(() => {
         const paw = this.overlay?.querySelector(`.pz-paw--${s.paw}`);
         if (paw && !motion.reduced) {
@@ -179,9 +184,9 @@ export class CatPounce {
           ));
         }
         this.later(() => {
-          this.scratches?.swipe({ cx: s.cx, cy: s.cy, length: W * (0.4 + Math.random() * 0.1), angle: s.angle + (Math.random() - 0.5) * 0.15, gap: Math.max(9, W * 0.032), width: Math.max(4, W * 0.011) });
+          this.scratches?.swipe({ cx: s.cx, cy: s.cy, length: diag * (0.42 + Math.random() * 0.1), angle: s.angle + (Math.random() - 0.5) * 0.15, gap: Math.max(12, short * 0.05), width: Math.max(6, short * 0.016) });
           this.sound('scratch');
-          if (!motion.reduced) this.shake(3, 120);
+          if (!motion.reduced) this.shake(5, 120);
         }, motion.reduced ? 0 : 60);
       }, i * beat));
       return swipes.length * beat + (motion.reduced ? 300 : 260);
