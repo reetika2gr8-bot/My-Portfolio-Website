@@ -342,6 +342,10 @@ export class DrawerExperience {
         </div>`;
       this.card.setAttribute('aria-label', `Polaroid. On the back: ${DRAWER.polaroid.memories[this.memoryIdx]}`);
       this.later(() => this.card.classList.add('is-flipped'), motion.reduced ? 0 : 520);
+    } else if (kind === 'hiring') {
+      const n = DRAWER.hiringNote;
+      this.card.innerHTML = `<div class="hn"><p class="hn__to">${esc(n.greeting)}</p>${n.body.map((t) => `<p>${esc(t)}</p>`).join('')}<p class="hn__ask">${esc(n.ask)}</p><p class="hn__sign">${esc(n.signoff)}</p></div>`;
+      this.card.setAttribute('aria-label', `A note: ${n.greeting} ${n.body.join(' ')} ${n.ask} ${n.signoff}`);
     } else if (kind === 'note') {
       const n = DRAWER.note;
       this.card.innerHTML = `<div class="nt"><p class="nt__title">${esc(n.title)}</p><p class="nt__body">${esc(n.body)}</p><p class="nt__sign">${esc(n.signoff)}</p></div>`;
@@ -360,6 +364,7 @@ export class DrawerExperience {
     const dx = from.left + from.width / 2 - (end.left + end.width / 2), dy = from.top + from.height / 2 - (end.top + end.height / 2);
     const s = Math.max(0.1, from.width / end.width);
     this.anim(this.card, [{ transform: `translate(${dx}px, ${dy}px) scale(${s}) rotate(${kind === 'note' ? 0 : -8}deg)`, opacity: 0.5 }, { transform: 'none', opacity: 1 }], { duration: 460, easing: 'cubic-bezier(.25,1.2,.4,1)' });
+    if (kind === 'hiring' && !motion.reduced) this.anim(this.card.firstChild, [{ transform: 'rotate(-7deg) scale(.94)', offset: 0 }, { transform: 'rotate(1deg) scale(1.02)', offset: 0.7 }, { transform: 'rotate(-1.5deg) scale(1)' }], { duration: 620, easing: 'cubic-bezier(.3,1.2,.5,1)' });
     if (kind === 'note' && !motion.reduced) this.anim(this.card.firstChild, [{ transform: 'scaleY(.2)' }, { transform: 'scaleY(.2)', offset: 0.35 }, { transform: 'scaleY(1.04)', offset: 0.8 }, { transform: 'scaleY(1)' }], { duration: 760, easing: 'ease-out' });
     fromBtn.style.visibility = 'hidden';
     this.later(() => this.root.querySelector('.dv__putback').focus({ preventScroll: true }), motion.reduced ? 0 : 400);

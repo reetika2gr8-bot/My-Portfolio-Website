@@ -131,6 +131,15 @@ export const OBJECT_ART = {
     <text x="56" y="64" text-anchor="middle" font-family="Caveat, cursive" font-weight="700" font-size="20" fill="#5a3a24" transform="rotate(-3 56 60)">for you</text>
     <path d="M40 70 q16 6 32 0" stroke="#a4553a" stroke-width="2" fill="none"/>` }),
 
+  // small torn piece of paper, tucked in — the note to the hiring manager
+  hiringNote: () => ({ vb: [104, 84], svg: `
+    <path d="M6 9 L18 6 L27 8 L39 5 L52 7 L64 4 L77 7 L88 5 L98 8 L97 20 L99 33 L96 46 L98 60 L95 74 L84 77 L70 75 L57 78 L44 76 L31 79 L18 76 L8 78 L7 64 L5 50 L8 37 L5 23 Z" fill="#f1e4c3" ${ink(0.45)}/>
+    <path d="M6 9 L18 6 L27 8 L39 5 L52 7 L64 4 L77 7 L88 5 L98 8 L97 20 L99 33 L60 30 Z" fill="#f8efd8" opacity="0.6"/>
+    <path d="M70 75 L95 74 L98 60 Z" fill="#d9c8a0" opacity="0.6"/>
+    <text x="13" y="24" font-family="Caveat, cursive" font-weight="700" font-size="13" fill="#4a3020" transform="rotate(-2 13 24)">Dear Hiring Manager,</text>
+    <path d="M13 36 q10 -2 20 0 t20 -1 t22 1 M13 46 q12 -2 24 0 t26 0 M13 56 q10 -1 20 0 t22 0 t16 -1" stroke="#5a3a24" stroke-width="1.6" fill="none" opacity="0.45" stroke-linecap="round"/>
+    <text x="58" y="70" font-family="Caveat, cursive" font-weight="700" font-size="11" fill="#a4553a">Hire me?</text>` }),
+
   crumpled: () => ({ vb: [120, 110], svg: `
     <path d="M18 34 L30 12 L54 18 L70 6 L94 20 L108 44 L100 66 L110 86 L84 100 L60 94 L36 104 L14 86 L20 62 L8 48 Z" fill="#e8dcc2" ${ink(0.5)}/>
     <path d="M30 12 L44 46 L70 6 M44 46 L94 20 M44 46 L60 94 M44 46 L14 86 M44 46 L20 62 M70 52 L108 44 M70 52 L84 100 M70 52 L60 94 M70 52 L44 46" stroke="#8a7a62" stroke-width="1.8" opacity="0.55" fill="none"/>
