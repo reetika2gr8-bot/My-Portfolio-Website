@@ -41,7 +41,7 @@ export const DRAWER = {
 
   note: {
     title: 'a note to whoever opened this',
-    body: "Thank you for looking around properly. Most people don't. If you've made it this far, we should probably work together. (Placeholder — write your own message here.)",
+    body: "Thank you for looking around properly. Most people don't. If you've made it this far, we should probably work together. May you get 2 masalas in your Maggi packet.",
     signoff: '— R.',
   },
 
