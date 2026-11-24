@@ -70,7 +70,7 @@ export const DRAWER = {
     { id: 'notebook', label: 'tiny notebook', art: 'notebook', x: 250, y: 200, w: 170, r: -8, canHide: true, anim: 'flap' },
     { id: 'polaroid', label: 'a polaroid', art: 'polaroid', x: 445, y: 175, w: 104, r: 8, egg: 'polaroid' },
     { id: 'pencil', label: 'pencil', art: 'pencil', x: 655, y: 150, w: 230, r: 14, anim: 'roll' },
-    { id: 'hiring', label: 'a note to someone', art: 'hiringNote', x: 702, y: 232, w: 104, r: -8, egg: 'hiring' },
+    { id: 'hiring', label: 'a note to someone', art: 'hiringNote', x: 698, y: 232, w: 124, r: -6, egg: 'hiring' },
     { id: 'clips', label: 'paper clips', art: 'clips', x: 808, y: 232, w: 92, r: 0, anim: 'jingle' },
     { id: 'note', label: 'a folded note', art: 'note', x: 215, y: 335, w: 112, r: 6, egg: 'note' },
     { id: 'crumpled', label: 'crumpled paper', art: 'crumpled', x: 372, y: 365, w: 120, r: 0, canHide: true, anim: 'bounce' },

@@ -132,13 +132,13 @@ export const OBJECT_ART = {
     <path d="M40 70 q16 6 32 0" stroke="#a4553a" stroke-width="2" fill="none"/>` }),
 
   // small torn piece of paper, tucked in — the note to the hiring manager
-  hiringNote: () => ({ vb: [104, 84], svg: `
-    <path d="M6 9 L18 6 L27 8 L39 5 L52 7 L64 4 L77 7 L88 5 L98 8 L97 20 L99 33 L96 46 L98 60 L95 74 L84 77 L70 75 L57 78 L44 76 L31 79 L18 76 L8 78 L7 64 L5 50 L8 37 L5 23 Z" fill="#f1e4c3" ${ink(0.45)}/>
-    <path d="M6 9 L18 6 L27 8 L39 5 L52 7 L64 4 L77 7 L88 5 L98 8 L97 20 L99 33 L60 30 Z" fill="#f8efd8" opacity="0.6"/>
-    <path d="M70 75 L95 74 L98 60 Z" fill="#d9c8a0" opacity="0.6"/>
-    <text x="13" y="24" font-family="Caveat, cursive" font-weight="700" font-size="13" fill="#4a3020" transform="rotate(-2 13 24)">Dear Hiring Manager,</text>
-    <path d="M13 36 q10 -2 20 0 t20 -1 t22 1 M13 46 q12 -2 24 0 t26 0 M13 56 q10 -1 20 0 t22 0 t16 -1" stroke="#5a3a24" stroke-width="1.6" fill="none" opacity="0.45" stroke-linecap="round"/>
-    <text x="58" y="70" font-family="Caveat, cursive" font-weight="700" font-size="11" fill="#a4553a">Hire me?</text>` }),
+  hiringNote: () => ({ vb: [124, 96], svg: `
+    <path d="M5 10 L19 6 L31 9 L45 5 L60 8 L74 4 L89 7 L102 5 L118 9 L116 23 L119 38 L116 53 L118 68 L115 84 L102 88 L86 86 L71 89 L56 87 L41 90 L26 87 L12 89 L6 75 L4 59 L7 44 L4 27 Z" fill="#f6ead0" ${ink(0.7, 2.2)}/>
+    <path d="M5 10 L19 6 L31 9 L45 5 L60 8 L74 4 L89 7 L102 5 L118 9 L117 24 L60 22 Z" fill="#fffaf0" opacity="0.7"/>
+    <path d="M86 86 L115 84 L118 68 Z" fill="#d9c49a"/>
+    <text x="62" y="27" text-anchor="middle" textLength="96" lengthAdjust="spacingAndGlyphs" font-family="Caveat, cursive" font-weight="700" font-size="14" fill="#2e1a10" transform="rotate(-2 62 27)">Dear Hiring Manager,</text>
+    <path d="M15 42 q12 -2 24 0 t24 -1 t26 1 M15 53 q14 -2 28 0 t30 0 M15 64 q12 -1 24 0 t26 0" stroke="#3a2416" stroke-width="1.8" fill="none" opacity="0.6" stroke-linecap="round"/>
+    <text x="108" y="81" text-anchor="end" font-family="Caveat, cursive" font-weight="700" font-size="14" fill="#a4553a" transform="rotate(-4 108 81)">Hire me?</text>` }),
 
   crumpled: () => ({ vb: [120, 110], svg: `
     <path d="M18 34 L30 12 L54 18 L70 6 L94 20 L108 44 L100 66 L110 86 L84 100 L60 94 L36 104 L14 86 L20 62 L8 48 Z" fill="#e8dcc2" ${ink(0.5)}/>
