@@ -38,7 +38,7 @@ export const OBJECTS = [
     shape: 'rect', x: 1108, y: 560, w: 82, h: 44, layer: 'mid' },
   { id: 'poster', label: 'Poster', a11y: 'Poster on the wall', action: 'say:poster',
     shape: 'rect', x: 880, y: 186, w: 134, h: 198, layer: 'mid' },
-  { id: 'drawer', label: 'Drawer', a11y: 'Desk drawer', action: 'say:drawer',
+  { id: 'drawer', label: 'Drawer', a11y: 'Desk drawer — open it', action: 'drawer',
     shape: 'rect', x: 484, y: 636, w: 214, h: 60, layer: 'mid' },
   { id: 'plane', label: 'Paper plane', a11y: 'Hanging paper plane', action: 'say:plane',
     shape: 'ellipse', x: 1166, y: 86, w: 80, h: 56, layer: 'mid' },

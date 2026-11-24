@@ -7,6 +7,7 @@ import './styles/character.css';
 import './styles/ui.css';
 import './styles/pages.css';
 import './styles/pounce.css';
+import './styles/drawer.css';
 
 import { SITE } from './config/site.js';
 import { ASSETS } from './config/assets.js';
@@ -25,6 +26,7 @@ import { buildHotspots } from './room/Hotspots.js';
 import { CharacterController, SvgCharacterRenderer } from './character/CharacterController.js';
 import { CatController, SvgCatRenderer } from './cat/CatController.js';
 import { CatPounce } from './cat/CatPounce.js';
+import { DrawerExperience } from './drawer/DrawerExperience.js';
 import { AmbienceManager } from './ambience/AmbienceManager.js';
 import { AmbienceSelector } from './ambience/AmbienceSelector.js';
 import { AudioEngine } from './audio/AudioEngine.js';
@@ -109,6 +111,7 @@ async function init() {
       case 'cat': cat.poke(); break;
       case 'ambience': selector.toggle(); break;
       case 'music': player.toggle(); break;
+      case 'drawer': closeAnyPopup(); drawer.open(); break;
       case 'coffee':
         wiggle(refs.desk.querySelector('.coffee'));
         say(coffeeLine(), 'coffee', { duration: 2400 });
@@ -141,6 +144,8 @@ async function init() {
   }
   hotspots = buildHotspots({ mid: refs.hotspotsMid, front: refs.hotspotsFront }, handleAction);
   host.hotspots = hotspots;
+  // "You weren't supposed to open this..." — the desk drawer + hidden-object game
+  const drawer = new DrawerExperience({ mount: app, room: roomEl, viewport, roomDrawer: refs.desk.querySelector('.room-drawer'), hotspot: hotspots.drawer, audio });
   bus.on('action', (a) => handleAction(a, {}));
 
   // --- desk clock
@@ -167,7 +172,7 @@ async function init() {
   }
 
   // handy for debugging in the console
-  window.__room = { character, cat, pounce: cat.pounce, ambience, audio, weather, stage, router, OBJECTS };
+  window.__room = { character, cat, pounce: cat.pounce, drawer, ambience, audio, weather, stage, router, OBJECTS };
 }
 
 init().catch((e) => {

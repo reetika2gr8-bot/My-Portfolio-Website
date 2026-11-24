@@ -20,6 +20,7 @@ import { foregroundSvg } from './art/foreground.js';
 import { SKIES, SKY_BOX, glassSvg } from './art/skies.js';
 import { curtainsSvg, plantSvg, coffeeSvg, radioSvg, planeSvg, wallStarGlowSvg, lightingSvg } from './art/inline.js';
 import { characterSvg } from '../character/characterArt.js';
+import { roomDrawerSvg } from '../drawer/drawerArt.js';
 import { catSvg } from '../cat/catArt.js';
 import { GLASS } from './Weather.js';
 
@@ -71,7 +72,7 @@ export async function buildRoom(stage) {
   refs.wallStars = stageSvg('layer--stars', wallStarGlowSvg());
   refs.curtains = stageSvg('layer--curtains', curtainsSvg());
   refs.plane = stageSvg('layer--plane', planeSvg());
-  refs.desk = stageSvg('layer--desk', coffeeSvg() + radioSvg());
+  refs.desk = stageSvg('layer--desk', roomDrawerSvg() + coffeeSvg() + radioSvg());
   refs.character = stageSvg('layer--character', characterSvg());
   refs.cat = stageSvg('layer--cat', catSvg());
   refs.plant = stageSvg('layer--plant', plantSvg());

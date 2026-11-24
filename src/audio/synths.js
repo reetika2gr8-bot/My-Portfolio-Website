@@ -224,6 +224,41 @@ function env(ctx, dest, t, peak, attack, dur) {
   return g;
 }
 export const EFFECTS = {
+  /** wooden drawer sliding out: low rumble + soft stop */
+  drawerOpen(ctx, dest) {
+    const t = ctx.currentTime, n = noise(ctx), f = ctx.createBiquadFilter();
+    f.type = 'lowpass'; f.frequency.setValueAtTime(380, t); f.frequency.linearRampToValueAtTime(700, t + 0.32);
+    n.connect(f); f.connect(env(ctx, dest, t, 0.2, 0.05, 0.38)); n.start(t, Math.random()); n.stop(t + 0.4);
+    const o = ctx.createOscillator(); o.frequency.setValueAtTime(140, t + 0.34); o.frequency.exponentialRampToValueAtTime(70, t + 0.46);
+    o.connect(env(ctx, dest, t + 0.34, 0.12, 0.005, 0.14)); o.start(t + 0.34); o.stop(t + 0.5);
+  },
+  /** drawer pushed shut: short slide + wooden knock */
+  drawerClose(ctx, dest) {
+    const t = ctx.currentTime, n = noise(ctx), f = ctx.createBiquadFilter();
+    f.type = 'lowpass'; f.frequency.value = 520; n.connect(f); f.connect(env(ctx, dest, t, 0.14, 0.03, 0.22)); n.start(t, Math.random()); n.stop(t + 0.25);
+    const o = ctx.createOscillator(); o.frequency.setValueAtTime(180, t + 0.2); o.frequency.exponentialRampToValueAtTime(80, t + 0.3);
+    o.connect(env(ctx, dest, t + 0.2, 0.2, 0.004, 0.12)); o.start(t + 0.2); o.stop(t + 0.34);
+  },
+  /** tiny wooden/paper tap */
+  tap(ctx, dest) {
+    const t = ctx.currentTime, o = ctx.createOscillator(), f = ctx.createBiquadFilter();
+    o.type = 'triangle'; o.frequency.setValueAtTime(900 + Math.random() * 300, t); o.frequency.exponentialRampToValueAtTime(400, t + 0.05);
+    f.type = 'bandpass'; f.frequency.value = 1200; o.connect(f); f.connect(env(ctx, dest, t, 0.06, 0.003, 0.07)); o.start(t); o.stop(t + 0.09);
+  },
+  /** paper rustle */
+  paper(ctx, dest) {
+    const t = ctx.currentTime, n = noise(ctx), f = ctx.createBiquadFilter();
+    f.type = 'highpass'; f.frequency.value = 2500; n.connect(f); f.connect(env(ctx, dest, t, 0.07, 0.02, 0.18)); n.start(t, Math.random()); n.stop(t + 0.2);
+  },
+  /** found it: a soft little chime arpeggio */
+  found(ctx, dest) {
+    const t = ctx.currentTime;
+    [76, 79, 83, 88].forEach((m, i) => {
+      const o = ctx.createOscillator(), f = 440 * Math.pow(2, (m - 69) / 12);
+      o.type = 'sine'; o.frequency.value = f;
+      o.connect(env(ctx, dest, t + i * 0.09, 0.09, 0.01, 0.9)); o.start(t + i * 0.09); o.stop(t + i * 0.09 + 1);
+    });
+  },
   /** a startled little "mrrAOW?" */
   startle(ctx, dest) {
     const t = ctx.currentTime + 0.01;

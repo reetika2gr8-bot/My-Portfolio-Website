@@ -74,6 +74,14 @@ names `.pz-paw--l/--r` (swipe), `.pz-eyes--wild/--smug`, `.pz-mouth--hiss/--smug
 parts to keep animating. The line Reetika says is `DIALOGUE.character.catPounce`; sounds are `EFFECTS` in
 `src/audio/synths.js` (they only play when the visitor has turned sound on).
 
+## Desk drawer
+`src/drawer/drawerArt.js` holds placeholder SVGs for the drawer close-up (`drawerBoxSvg`, 1000 × 640), the in-room
+drawer copy (`roomDrawerSvg`, drawn exactly over the painted drawer at stage x482–696, y638–694), each object in
+`OBJECT_ART` (notebook, polaroid, pencil, clips, note, crumpled, camera, fortune, stickers, cattoy, cookie) and the lucky
+`charmArt`. Each returns `{ vb: [w, h], svg }` — replace the inner SVG with `<image href="assets/objects/drawer/<name>.webp"
+width="w" height="h"/>` at the same viewBox size. Positions, labels and all text (messages, memories, note, fortunes)
+are in `src/config/drawer.js`. Game rules: `src/drawer/HiddenObjectGame.js`.
+
 ## Other images
 - Project thumbnails: `public/assets/projects/thumbnails/<id>.jpg` (4:3). Case-study images: `…/case-studies/`.
 - Process/sketchbook images: `public/assets/process/` → set `src` in `src/config/process.js`.

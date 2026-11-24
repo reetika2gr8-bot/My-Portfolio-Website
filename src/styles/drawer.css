@@ -1,0 +1,156 @@
+/* ===================== DESK DRAWER — "You weren't supposed to open this..." ===================== */
+
+/* ---- in the room: the inline drawer copy (invisible until it moves) ---- */
+.room-drawer, .room-drawer * { transform-box: view-box; }
+.room-drawer { opacity: 0; transition: opacity 0s linear 0.5s; }
+.room-drawer.is-open { opacity: 1; transition: none; }
+.room-drawer__cavity { opacity: 0; transition: opacity 0.2s; }
+.room-drawer.is-open .room-drawer__cavity { opacity: 1; }
+.room-drawer__box { transform-origin: 589px 694px; transition: transform 0.45s cubic-bezier(0.3, 1.35, 0.5, 1); }
+.room-drawer.is-open .room-drawer__box { transform: translateY(17px) scale(1.07); }
+.room-drawer__inside { transform-origin: 589px 640px; transform: scaleY(0); transition: transform 0.45s cubic-bezier(0.3, 1.2, 0.5, 1); }
+.room-drawer.is-open .room-drawer__inside { transform: scaleY(1); }
+/* gentle camera move toward the drawer */
+.room.is-drawer .viewport { transform: scale(1.06); transform-origin: var(--zx, 37%) var(--zy, 75%); }
+
+/* ---- the close-up ---- */
+.dv { position: fixed; inset: 0; z-index: 34; perspective: 1400px; }
+.dv__backdrop { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 85%, rgba(16, 10, 6, 0.22), rgba(16, 10, 6, 0.5)); }
+.dv__stage {
+  position: absolute; left: 50%; bottom: max(10px, env(safe-area-inset-bottom)); translate: -50% 0;
+  width: min(94vw, 980px, calc((100vh - 190px) * 1.5625));
+  display: flex; flex-direction: column; transform-origin: 50% 65%; outline: none;
+}
+.dv__drawer { position: relative; width: 100%; aspect-ratio: 1000 / 640; }
+.dv-box { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.dv__floor { position: absolute; inset: 0; }
+
+/* the handwritten scrap (messages) */
+.dv__scrap {
+  position: relative; z-index: 6; align-self: flex-start; margin: 0 0 -22px 3%; max-width: min(560px, 80%);
+  padding: 12px 20px 14px; background: var(--paper); color: var(--ink); rotate: -1.4deg;
+  border-radius: 2px 5px 3px 6px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+.dv__scrap::before { content: ''; position: absolute; left: 22px; top: -10px; width: 74px; height: 20px; rotate: -4deg; background: rgba(164, 85, 58, 0.55); }
+.dv__snoop { margin: 0; font: 700 clamp(19px, 2.1vw, 24px)/1.15 var(--hand); color: var(--rust); }
+.dv__msg { margin: 4px 0 0; font: 600 clamp(18px, 1.9vw, 22px)/1.25 var(--hand); color: var(--ink); min-height: 1.25em; }
+.dv__snoop, .dv__msg { opacity: 0; translate: 0 6px; transition: opacity 0.6s ease, translate 0.6s var(--ease); }
+.dv.is-snooped .dv__snoop { opacity: 1; translate: 0 0; }
+.dv.is-snooped .dv__msg { opacity: 1; translate: 0 0; transition-delay: 0.9s; }
+.dv.is-won .dv__msg { color: #4a3a12; }
+.dv__again, .dv__shut, .dv__putback {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border: 0;
+  font: 700 19px/1 var(--hand); color: var(--ink); background: #f6efe0; padding: 7px 13px 9px;
+  border-radius: 3px 8px 4px 7px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.dv__again { margin-top: 8px; background: var(--amber); rotate: 1.5deg; }
+.dv__again svg, .dv__shut svg, .dv__putback svg { width: 18px; height: 18px; }
+.dv__again:hover, .dv__shut:hover, .dv__putback:hover { translate: 0 -2px; }
+.dv__shut { position: absolute; z-index: 6; right: 2%; top: 6px; rotate: 2deg; }
+
+/* drawer front: push to close */
+.dv__front { position: absolute; left: 0; right: 0; bottom: 0; height: 8%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.dv__knob {
+  position: absolute; left: 50%; top: 52%; width: 3.4%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f2cf7a, #c9a14a 55%, #6a4f1f); box-shadow: 0 3px 4px rgba(0, 0, 0, 0.45);
+}
+.dv__frontlabel {
+  position: absolute; left: 50%; top: 50%; translate: 30px -50%; font: 700 17px/1 var(--hand); color: #f2ead9;
+  opacity: 0; transition: opacity 0.2s; white-space: nowrap; text-shadow: 0 1px 2px #000;
+}
+.dv__front:hover .dv__frontlabel, .dv__front:focus-visible .dv__frontlabel { opacity: 1; }
+.dv__front:focus-visible { outline: 2px dashed var(--cream); outline-offset: 2px; }
+
+/* objects */
+.dobj {
+  --os: 1;
+  position: absolute; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; z-index: 1;
+  rotate: var(--r); scale: var(--os); -webkit-tap-highlight-color: transparent;
+  filter: drop-shadow(1px 4px 2px rgba(22, 11, 4, 0.5));
+  transition: translate 0.25s var(--ease), rotate 0.25s var(--ease), filter 0.25s ease;
+}
+.dobj::after { content: ''; position: absolute; inset: -12px; }
+.dobj__art { display: block; }
+.dobj svg { display: block; width: 100%; height: auto; overflow: visible; }
+.dobj:hover, .dobj:focus-visible { z-index: 3; translate: 0 -7px; rotate: calc(var(--r) + 2.5deg); filter: drop-shadow(4px 14px 7px rgba(22, 11, 4, 0.38)); }
+.dobj:focus-visible { outline: 2px dashed var(--cream); outline-offset: 4px; border-radius: 6px; }
+.dobj:active { translate: 0 -2px; }
+.dobj__tag {
+  position: absolute; left: 50%; bottom: 100%; translate: -50% -2px; rotate: calc(var(--r) * -1);
+  white-space: nowrap; pointer-events: none; font: 700 17px/1 var(--hand); color: var(--ink);
+  background: var(--paper); padding: 3px 9px 5px; border-radius: 2px 5px 3px 4px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0; transition: opacity 0.2s;
+}
+.dobj:hover .dobj__tag, .dobj:focus-visible .dobj__tag { opacity: 1; }
+@media (hover: none) { .dobj__tag { display: none; } }
+.dobj__tick { position: absolute; right: -4px; top: -12px; width: 24px; rotate: calc(var(--r) * -1); pointer-events: none; }
+.dobj__tick svg { width: 24px; }
+.dobj.is-moved { z-index: 3; }
+/* cookie bites */
+.dobj--cookie .ck-bite { opacity: 0; }
+.dobj--cookie[data-bites='1'] .ck-bite--1, .dobj--cookie[data-bites='2'] .ck-bite--1, .dobj--cookie[data-bites='2'] .ck-bite--2,
+.dobj--cookie[data-bites='3'] .ck-bite { opacity: 1; }
+
+/* the charm */
+.dcharm { --os: 1; position: absolute; z-index: 0; padding: 0; border: 0; background: none; cursor: pointer; scale: var(--os); }
+.dcharm svg { display: block; width: 100%; height: auto; overflow: visible; }
+.dcharm.is-found { z-index: 4; filter: drop-shadow(0 0 10px rgba(255, 214, 120, 0.85)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.4)); animation: charmBob 2.4s ease-in-out infinite; }
+@keyframes charmBob { 50% { translate: 0 -5px; } }
+
+/* effects */
+.dv__flash { position: absolute; inset: 0; background: #fffaf0; opacity: 0; pointer-events: none; mix-blend-mode: screen; z-index: 5; }
+.dv__sparkles { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+.dv__spark { position: absolute; width: 9px; height: 9px; border-radius: 50%; }
+.dv__spark--star { width: 14px; height: 14px; border-radius: 0; clip-path: polygon(50% 0, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0 50%, 39% 38%); }
+.dv__crumb { position: absolute; width: 6px; height: 4px; border-radius: 40%; background: #b8783e; pointer-events: none; z-index: 4; }
+
+/* ---- inspect layer (polaroid / note / fortune) ---- */
+.dv__inspect { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; }
+.dv__scrim { position: fixed; inset: 0; background: rgba(16, 10, 6, 0.35); }
+.dv__card { position: relative; cursor: pointer; }
+.dv__putback { position: absolute; left: 50%; bottom: 2%; translate: -50% 0; rotate: -1.5deg; }
+
+.dv__card--polaroid { width: min(290px, 58vw); perspective: 900px; }
+.pc { position: relative; aspect-ratio: 100 / 118; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.3, 1.2, 0.5, 1); }
+.is-flipped .pc { transform: rotateY(180deg) rotate(-2deg); }
+.pc__face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.4)); }
+.pc__front svg { width: 100%; height: 100%; display: block; }
+.pc__back {
+  transform: rotateY(180deg); background: #f2ead9; border-radius: 2px; padding: 12% 11%;
+  display: flex; flex-direction: column; justify-content: center; gap: 14px; color: var(--ink);
+  background-image: repeating-linear-gradient(transparent 0 27px, rgba(111, 134, 160, 0.18) 27px 28px);
+}
+.pc__back p { margin: 0; font: 700 clamp(19px, 2.2vw, 23px)/1.2 var(--hand); }
+.pc__back span { font: 600 17px/1 var(--hand); color: var(--rust); align-self: flex-end; }
+
+.dv__card--note { width: min(380px, 82vw); }
+.nt {
+  transform-origin: 50% 0; padding: 26px 26px 22px; color: var(--ink); rotate: 1deg;
+  background: #e6d28e; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+  background-image: linear-gradient(transparent 0 calc(50% - 1px), rgba(120, 95, 40, 0.35) calc(50% - 1px) 50%, transparent 50%),
+    repeating-linear-gradient(transparent 0 29px, rgba(90, 70, 30, 0.14) 29px 30px);
+}
+.nt__title { margin: 0 0 8px; font: 700 18px/1 var(--hand); color: var(--rust); }
+.nt__body { margin: 0; font: 700 clamp(20px, 2.3vw, 24px)/1.25 var(--hand); }
+.nt__sign { margin: 12px 0 0; text-align: right; font: 700 22px/1 var(--hand); }
+
+.dv__card--fortune { width: min(250px, 56vw); }
+.fo { position: relative; display: grid; justify-items: center; }
+.fo__teller { width: 72%; height: auto; display: block; overflow: visible; filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.4)); position: relative; z-index: 1; }
+.fo__slip {
+  width: 100%; margin-top: -10%; padding: 14px 16px; background: #fbf6ea; color: var(--ink); rotate: -2deg;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35); opacity: 0; translate: 0 -40%; scale: 0.6;
+  transition: opacity 0.4s ease, translate 0.5s cubic-bezier(0.3, 1.4, 0.5, 1), scale 0.5s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.fo__slip.is-out { opacity: 1; translate: 0 0; scale: 1; }
+.fo__slip p { margin: 0; text-align: center; font: 700 clamp(19px, 2vw, 22px)/1.2 var(--hand); }
+
+/* ---- portrait / phones: a deeper drawer and bigger objects ---- */
+@media (max-aspect-ratio: 4/5) {
+  .dv__stage { width: 96vw; }
+  .dv__drawer { aspect-ratio: 1000 / 900; }
+  .dobj, .dcharm { --os: 1.3; }
+  .dv__scrap { max-width: 92%; margin-bottom: -14px; }
+  .dv__shut { top: auto; bottom: calc(100% + 6px); }
+  .dv__stage { bottom: max(8px, env(safe-area-inset-bottom)); }
+}

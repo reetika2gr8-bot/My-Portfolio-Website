@@ -14,7 +14,8 @@ visitors explore by clicking objects in the room. No navbar, no hero section —
 | Cassette radio (window sill) | Music player |
 | Reetika | Poke her. She turns around and talks back (6 expressions, escalating lines) |
 | Cat | **Don't.** She wakes, glares, leaps at the screen, scratches it, and Reetika says "Told ya!" (`src/cat/CatPounce.js`) |
-| Coffee, lamp, clock, plant, poster, drawer, paper plane, 3 hidden wall stars | Easter eggs |
+| Desk drawer | "You weren't supposed to open this..." — a drawer of little things, a find-the-lucky-charm game, a polaroid, a note and a paper fortune teller (`src/drawer/`, text in `src/config/drawer.js`) |
+| Coffee, lamp, clock, plant, poster, paper plane, 3 hidden wall stars | Easter eggs |
 
 A **room guide** (top-right) and a **skip link** list every destination as plain links, so
 nothing depends on finding objects visually. A discreet **sound** button sits bottom-left.
