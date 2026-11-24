@@ -6,6 +6,7 @@ import './styles/room.css';
 import './styles/character.css';
 import './styles/ui.css';
 import './styles/pages.css';
+import './styles/pounce.css';
 
 import { SITE } from './config/site.js';
 import { ASSETS } from './config/assets.js';
@@ -23,6 +24,7 @@ import { Dialogue } from './room/Dialogue.js';
 import { buildHotspots } from './room/Hotspots.js';
 import { CharacterController, SvgCharacterRenderer } from './character/CharacterController.js';
 import { CatController, SvgCatRenderer } from './cat/CatController.js';
+import { CatPounce } from './cat/CatPounce.js';
 import { AmbienceManager } from './ambience/AmbienceManager.js';
 import { AmbienceSelector } from './ambience/AmbienceSelector.js';
 import { AudioEngine } from './audio/AudioEngine.js';
@@ -76,6 +78,8 @@ async function init() {
   const audio = new AudioEngine();
   const ambience = new AmbienceManager({ room: roomEl, refs, weather, audio, character });
   ambience.apply(prefs.get('ambience', SITE.defaultAmbience), { instant: true, quiet: true });
+  // the "I warned you" easter egg — owns cat pokes
+  cat.pounce = new CatPounce({ catRoot: refs.cat.querySelector('.cat'), cat, character, audio, shakeTarget: viewport, stage });
   const selector = new AmbienceSelector(refs.popups, ambience, audio, stage);
   const player = new MusicPlayer(refs.popups, audio, refs.desk.querySelector('.radio'), stage);
   new SoundControl(ui, audio, () => player.popup.open());
@@ -163,7 +167,7 @@ async function init() {
   }
 
   // handy for debugging in the console
-  window.__room = { character, cat, ambience, audio, weather, stage, router, OBJECTS };
+  window.__room = { character, cat, pounce: cat.pounce, ambience, audio, weather, stage, router, OBJECTS };
 }
 
 init().catch((e) => {

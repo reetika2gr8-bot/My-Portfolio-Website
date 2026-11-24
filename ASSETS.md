@@ -65,6 +65,15 @@ The class names are the animation contract (`.char__hand`, `.head--front`, `.exp
 Same format. States: `sleeping`, `waking`, `looking`, `stretching`, `returning`, `grumpy`.
 Suggested box: `{ x: 1300, y: 590, w: 220, h: 140 }`. Breathing/ear-twitch frames go in `sleeping`.
 
+## Cat pounce easter egg ("I warned you")
+Poking the cat runs `src/cat/CatPounce.js` (states: sleeping → waking → leaping → scratching → dialogue → returning).
+The bed cat is hidden while a **pounce pose** (`src/cat/pounceArt.js`, placeholder SVG in the same palette) leaps toward
+the screen; claw marks come from `src/cat/ScratchOverlay.js`. For painted art, replace the SVG in `pounceArt.js` with
+your image(s) — **400 × 380**, transparent, cat facing the viewer with paws raised (attack pose) — and keep the class
+names `.pz-paw--l/--r` (swipe), `.pz-eyes--wild/--smug`, `.pz-mouth--hiss/--smug` on separate layers if you want those
+parts to keep animating. The line Reetika says is `DIALOGUE.character.catPounce`; sounds are `EFFECTS` in
+`src/audio/synths.js` (they only play when the visitor has turned sound on).
+
 ## Other images
 - Project thumbnails: `public/assets/projects/thumbnails/<id>.jpg` (4:3). Case-study images: `…/case-studies/`.
 - Process/sketchbook images: `public/assets/process/` → set `src` in `src/config/process.js`.

@@ -213,3 +213,42 @@ export const AMBIENT_SYNTHS = {
     return { output: v.out, stop: v.stop };
   },
 };
+
+/* ---------------- ONE-SHOT EFFECTS ---------------- */
+function env(ctx, dest, t, peak, attack, dur) {
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(peak, t + attack);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  g.connect(dest);
+  return g;
+}
+export const EFFECTS = {
+  /** a startled little "mrrAOW?" */
+  startle(ctx, dest) {
+    const t = ctx.currentTime + 0.01;
+    const o = ctx.createOscillator(); o.type = 'sawtooth';
+    o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(1150, t + 0.1); o.frequency.exponentialRampToValueAtTime(700, t + 0.32);
+    const vib = ctx.createOscillator(), vg = ctx.createGain(); vib.frequency.value = 28; vg.gain.value = 18; vib.connect(vg); vg.connect(o.frequency);
+    const f1 = ctx.createBiquadFilter(); f1.type = 'bandpass'; f1.frequency.value = 1300; f1.Q.value = 3;
+    const f2 = ctx.createBiquadFilter(); f2.type = 'bandpass'; f2.frequency.value = 2600; f2.Q.value = 4;
+    const g = env(ctx, dest, t, 0.22, 0.03, 0.38);
+    o.connect(f1); o.connect(f2); f1.connect(g); f2.connect(g);
+    o.start(t); vib.start(t); o.stop(t + 0.42); vib.stop(t + 0.42);
+  },
+  /** a quick whoosh */
+  leap(ctx, dest) {
+    const t = ctx.currentTime, n = noise(ctx), f = ctx.createBiquadFilter();
+    f.type = 'bandpass'; f.Q.value = 1.2; f.frequency.setValueAtTime(400, t); f.frequency.exponentialRampToValueAtTime(2200, t + 0.35);
+    n.connect(f); f.connect(env(ctx, dest, t, 0.12, 0.12, 0.42)); n.start(t, Math.random()); n.stop(t + 0.45);
+  },
+  /** one claw swipe: a scratchy, rising noise burst */
+  scratch(ctx, dest) {
+    const t = ctx.currentTime, n = noise(ctx), f = ctx.createBiquadFilter(), hp = ctx.createBiquadFilter();
+    f.type = 'bandpass'; f.Q.value = 2.5; f.frequency.setValueAtTime(2200, t); f.frequency.exponentialRampToValueAtTime(5200, t + 0.12);
+    hp.type = 'highpass'; hp.frequency.value = 1200;
+    const g = env(ctx, dest, t, 0.2, 0.008, 0.14);
+    const am = ctx.createOscillator(), ag = ctx.createGain(); am.frequency.value = 90; ag.gain.value = 0.08; am.connect(ag); ag.connect(g.gain);
+    n.connect(f); f.connect(hp); hp.connect(g); n.start(t, Math.random()); n.stop(t + 0.16); am.start(t); am.stop(t + 0.16);
+  },
+};

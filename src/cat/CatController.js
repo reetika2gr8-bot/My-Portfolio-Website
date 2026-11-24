@@ -33,7 +33,7 @@ export class CatController {
   scheduleAmbient() {
     clearTimeout(this.ambientTimer);
     this.ambientTimer = setTimeout(() => {
-      if (this.state === 'sleeping' && !motion.reduced) {
+      if (this.state === 'sleeping' && !motion.reduced && !this.pounce?.busy) {
         const cls = ['is-twitch-l', 'is-twitch-r', 'is-flick', 'is-shift'][Math.floor(Math.random() * 4)];
         this.flag(cls, true);
         setTimeout(() => this.flag(cls, false), cls === 'is-shift' ? 1600 : 700);
@@ -43,6 +43,8 @@ export class CatController {
   }
 
   async poke() {
+    // The pounce easter egg (CatPounce) owns pokes when it's attached.
+    if (this.pounce) return this.pounce.start();
     const now = Date.now();
     this.clicks = this.clicks.filter((t) => now - t < 6000).concat(now);
     const id = ++this.seq;

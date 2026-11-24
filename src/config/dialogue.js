@@ -27,6 +27,8 @@ export const DIALOGUE = {
     lampOff: { text: "Hey! I can't see anything.", expression: 'surprised' },
     lampBackOn: { text: 'Much better.', expression: 'neutral' },
     catDefend: { text: "Don't poke my cat.", expression: 'annoyed' },
+    // after the cat leaps at the screen (CatPounce)
+    catPounce: { label: 'Reetika', text: "Told ya! Don't poke my cat... she's very moody.", expression: 'smiling', typewriter: true },
   },
 
   cat: [

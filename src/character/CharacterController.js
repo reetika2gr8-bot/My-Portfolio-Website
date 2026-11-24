@@ -84,7 +84,7 @@ export class CharacterController {
     }
     this.set('reacting', 'front', line.expression || 'neutral');
     this.startBlinking();
-    if (line.text) this.say(line.text, 'character', { duration: hold });
+    if (line.text) this.say(line.text, 'character', { duration: hold, label: line.label, typewriter: line.typewriter });
     if (line.action) setTimeout(() => bus.emit('action', line.action), 900);
     await wait(hold);
     if (id !== this.seq) return;

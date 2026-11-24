@@ -13,7 +13,7 @@ visitors explore by clicking objects in the room. No navbar, no hero section —
 | Window | Ambience selector (5 moods) |
 | Cassette radio (window sill) | Music player |
 | Reetika | Poke her. She turns around and talks back (6 expressions, escalating lines) |
-| Cat | Wakes, looks at you, stretches, goes back to sleep (gets grumpy if you keep poking) |
+| Cat | **Don't.** She wakes, glares, leaps at the screen, scratches it, and Reetika says "Told ya!" (`src/cat/CatPounce.js`) |
 | Coffee, lamp, clock, plant, poster, drawer, paper plane, 3 hidden wall stars | Easter eggs |
 
 A **room guide** (top-right) and a **skip link** list every destination as plain links, so

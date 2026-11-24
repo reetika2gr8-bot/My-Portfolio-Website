@@ -7,7 +7,7 @@
  * missing files fall back silently.
  */
 import { MUSIC_TRACKS, AMBIENT_SOUNDS, AUDIO_DEFAULTS } from '../config/audio.js';
-import { MUSIC_SYNTHS, AMBIENT_SYNTHS } from './synths.js';
+import { MUSIC_SYNTHS, AMBIENT_SYNTHS, EFFECTS } from './synths.js';
 import { assetUrl } from '../core/dom.js';
 import { prefs } from '../core/prefs.js';
 import { bus } from '../core/events.js';
@@ -152,6 +152,16 @@ export class AudioEngine {
       gain.gain.setTargetAtTime(vol, this.ctx.currentTime, 0.6);
       this.ambient = { el, gain };
     }).catch(() => { if (!settled) { settled = true; useSynth(); } });
+  }
+
+  /* ---------- one-shot effects ---------- */
+  /** True only when the visitor has deliberately switched sound on (music or weather) and not muted. */
+  get soundOn() { return !!this.ctx && this.ctx.state === 'running' && !this.muted && (this.playing || this.ambientEnabled); }
+
+  /** Plays a short effect (see EFFECTS in synths.js) — silently skipped unless sound is on. */
+  playEffect(name) {
+    if (!this.soundOn || !EFFECTS[name]) return;
+    try { EFFECTS[name](this.ctx, this.master); } catch { /* never let a sound break the room */ }
   }
 
   /* ---------- lifecycle ---------- */
