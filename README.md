@@ -30,7 +30,7 @@ npm run preview    # serve the built site
 
 No runtime dependencies. Vite is the only dev dependency.
 
-**Live site:** https://reetika2gr8-bot.github.io/my-portfolio-website/. Every push to `main` rebuilds and
+**Live site:** https://reetika2gr8-bot.github.io/My-Portfolio-Website/. Every push to `main` rebuilds and
 republishes it automatically (`.github/workflows/deploy.yml`, GitHub Pages → Source: GitHub Actions).
 
 ## Where things live
