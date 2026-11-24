@@ -13,17 +13,21 @@ export const DRAWER = {
   opening: "Oh. You're snooping. Interesting.",
   intro: "I've misplaced my lucky charm. Can you find it?",
   win: 'You found it! You officially have too much time on your hands. But I appreciate you.',
-  alreadySearched: ['You already looked there.', 'Still not there. I checked.', 'Same paper clip. Same answer.'],
-  wrong: [
-    "Not that one. That's important. Probably.",
-    'Why are you touching my stationery?',
-    'Nope. Keep looking.',
-    'That was literally a paper clip.',
-    "You're making a mess.",
-    'Are you sure you have work to do?',
-    'Warm. Actually no, cold.',
-    "Hey, put that back where it was. Ish.",
-  ],
+  // shown when an object you already checked is clicked again ({label} = the object's label)
+  alreadySearched: ['You already checked the {label}.', 'Still not under the {label}. I promise.', 'The {label} again? Bold.'],
+  // fallback lines for any object you add without its own lines in `wrong` below
+  wrongGeneric: ['Nope. Keep looking.', 'Are you sure you have work to do?', 'Warm. Actually no, cold.'],
+  // what Reetika says when you search each object (key = object id below)
+  wrong: {
+    notebook: ["Not that one. That's important. Probably.", "That's my ideas notebook. Most of them are bad.", 'No charm. Just forty pages of doodles.'],
+    pencil: ['Why are you touching my stationery?', 'The charm is not inside the pencil.', "Careful, that's my favourite 2B."],
+    clips: ['That was literally a paper clip.', 'Three paper clips. Zero charms.', "Don't untwist them. I'll know."],
+    crumpled: ["You're making a mess.", 'That was a rejected idea. Let it rest.', 'Just a crumpled sketch. Nothing under it.'],
+    camera: ['Smile! …No charm under there though.', "Careful, that's my film camera.", 'Only blurry holiday photos in there.'],
+    stickers: ['Why are you touching my stationery?', 'Those stickers are for special occasions.', 'Nope, just stickers. Very cute ones.'],
+    cattoy: ["That's the cat's. She will notice.", 'Squeak. No charm.', "Don't let her see you with that."],
+    cookie: ["Hey, that's my emergency cookie.", 'Did you just bite my cookie?', 'Crumbs. Just crumbs. No charm.'],
+  },
 
   polaroid: {
     // each click on the polaroid shows the next memory

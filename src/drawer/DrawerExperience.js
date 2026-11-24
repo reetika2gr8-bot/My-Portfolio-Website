@@ -41,7 +41,9 @@ export class DrawerExperience {
       spots: this.objects.filter((o) => !o.egg).map((o) => o.id),
       hideable: this.objects.filter((o) => o.canHide).map((o) => o.id),
       wrong: DRAWER.wrong,
+      generic: DRAWER.wrongGeneric,
       already: DRAWER.alreadySearched,
+      labels: Object.fromEntries(DRAWER.objects.map((o) => [o.id, o.label])),
     });
     this.memoryIdx = -1;
     this.lastFortune = -1;
